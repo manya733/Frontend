@@ -1,43 +1,82 @@
-import { useFormik } from 'formik'
-import React from 'react'
+import { useFormik } from "formik";
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import * as Yup from 'yup';
+
+const signupSchema = Yup.object().shape({
+  email: Yup.string().email('Invalid email').required('Required'),
+  password: Yup.string().required('Password is Required')
+});
 
 const AddBlog = () => {
-  const blogForm = useFormik({
-    initalValues: {
-      title: '',
-      Description: ''
+  
+  const navigate = useNavigate();
 
-      
-
+  const signupForm = useFormik({
+    initialValues: {
+      user: '',
+    title:'',
+    description:'',
+    data: '',
+    cover:'',
     },
-    onSubmit:async(values)=>{
-      console.log(values);
-    }
-  })
 
+    onSubmit: async (values) => {
+      console.log(values);
+
+      // sending a request on backend to save user data
+      const res = await fetch('http://localhost:5000/user/add', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(values)
+      });
+
+      console.log(res.status);
+
+      if(res.status === 200){
+        Swal.fire({
+          icon : 'success',
+          title : 'User Registered Successfully',
+          text : 'Please Login to Continue'
+        });
+        navigate('/login');
+      }
+
+      // add code here to connect to backend
+    },
+
+    validationSchema: signupSchema
+  });
 
   return (
     <div>
-      <h2 className="my-5 text-center">Add Blogs</h2>
-
-
-      <form className="col-md-5 mx-auto">
+      <div className="col-md-3 mx-auto">
         <div className="card">
           <div className="card-body">
+            <h2 className="my-5 text-center">Signup Form</h2>
 
-            < label htmlFor="">Title</label>
-            <input type="  title" className='form-control mb-4' name="title" />
-            < label htmlFor="">Description</label>
-            <input type="description" className='form-control mb-4' name="description" />
-            <button type='add blog' className="my-5 btn btn-primary w-100">Add Blog</button>
+            <form onSubmit={signupForm.handleSubmit}>
+              <label htmlFor="">Name</label>
+              <span style={{color: 'red', fontSize: 15, marginLeft: 10}}>{signupForm.touched.name && signupForm.errors.name}</span>
+              <input className="form-control mb-3" onChange={signupForm.handleChange} value={signupForm.values.name} name="name" />
+              
+              <label htmlFor="">Email</label>
+              <span style={{color: 'red', fontSize: 15, marginLeft: 10}}>{signupForm.touched.email && signupForm.errors.email}</span>
+              <input className="form-control mb-3" onChange={signupForm.handleChange} value={signupForm.values.email} name="email" />
+
+              <label htmlFor="">Password</label>
+              <span style={{color: 'red', fontSize: 15, marginLeft: 10}}>{signupForm.touched.password && signupForm.errors.password}</span>
+              <input className="form-control mb-3" type="password" onChange={signupForm.handleChange} value={signupForm.values.password} name="password" />
+
+              <button type="submit" className="btn btn-primary mt-4">Login</button>
+            </form>
+
           </div>
-        </div>
-      </form>
+        </div>  
+      </div>
     </div>
-
-
-
-  )
+  );
 };
 
-export default AddB
+export default AddBlog;
