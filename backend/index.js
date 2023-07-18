@@ -4,6 +4,7 @@ const port=5000;
 
 const userRouter=require('./router/userRouter');
 const blogRouter=require('./router/blogRouter');
+const utilRouter=require('./router/util');
 const cors=require('cors');
 
 
@@ -13,7 +14,9 @@ app.use(cors());
 
 app.use('/user',userRouter);
 app.use('/blog',blogRouter);
+app.use('/util', utilRouter);
 
+app.use(express.static('./uploads'));
 
 //Routes
 app.get('/',(req,res)=>

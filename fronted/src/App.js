@@ -8,6 +8,8 @@ import AddBlog from './components/Add';
 import ListBlog from './components/ListBlogs';
 import Navbar from './components/Navbar';
 import { UserProvider } from './UserContext';
+import UserAuth from './UserAuth';
+import ViewBlog from './components/ViewBlog';
 
 function App() {
   return (
@@ -19,8 +21,9 @@ function App() {
             <Route element={<Home />} path='home' />
             <Route element={<Login />} path='login' />
             <Route element={<Signup />} path='signup' />
-            <Route element={<AddBlog />} path='addblog' />
+            <Route element={ <UserAuth> <AddBlog /> </UserAuth>} path='addblog' />
             <Route element={<ListBlog />} path='listblog' />
+            <Route element={<ViewBlog />} path='viewblog/:id' />
           </Routes>
         </UserProvider>
       </BrowserRouter>

@@ -2,7 +2,7 @@ const express=require('express');
 const router=express.Router();
 const Model =require('../models/blogModel');
 
-router.get('/add', (req, res) => {
+router.post('/add', (req, res) => {
     console.log(req.body);
     new Model(req.body).save()
     .then((result) => {
