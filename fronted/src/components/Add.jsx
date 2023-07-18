@@ -41,7 +41,7 @@ const AddBlog = () => {
       if (res.status === 200) {
         Swal.fire({
           icon: 'success',
-          title: 'Addblog Successfully!!...',
+          title: 'Blog Add Successfully!!...',
           text: 'Please Login to Continue'
         });
       }
@@ -71,7 +71,7 @@ const AddBlog = () => {
       <div className="col-md-8 mx-auto">
         <div className="card">
           <div className="card-body">
-            <h2 className="my-5 text-center">Add Blog</h2>
+            <h2 className="my-5 text-center ">Add Blog</h2>
 
             <form onSubmit={AddForm.handleSubmit}>
               <label htmlFor="">Title</label>

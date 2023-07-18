@@ -35,7 +35,7 @@ const Home = () => {
     
     <div>
      
-      <header className='text-center'></header>
+    
       <h2 className='my-text' style={{ color: 'blue', fontsize: '2rem' }}>Inc .This Morning</h2>
       <h1 className='my-text' style={{ color: 'darkblue', fontsize: '3rem' }}>
         <span>"<span>Blog</span>"</span>
